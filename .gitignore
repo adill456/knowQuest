@@ -1,0 +1,31 @@
+# Node.js
+node_modules/
+
+# Logs
+logs
+*.log
+
+# Runtime data
+pids
+*.pid
+*.seed
+*.pid.lock
+
+# Dependency directories
+lib/
+bin/
+dist/
+
+# Optional npm cache directory
+.npm
+
+# Environment variables
+.env
+
+# IDE settings
+.idea
+.vscode
+
+# OS generated files
+.DS_Store
+Thumbs.db
