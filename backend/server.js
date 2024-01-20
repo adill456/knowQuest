@@ -1,14 +1,15 @@
-const express = require('express');
-const sequelize = require('./config');
+import express from 'express';
+
+import { sequelize } from './config/database.js';
+import { mainRouter } from './routes/main.js';
+
 
 const app = express();
 
 app.use(express.static('public'));
 app.use(express.json());
 
-app.get('/', (req, res) => {
-    res.send('Hello World');
-})
+app.use('/api', mainRouter);
 
 sequelize.authenticate().then(() => {
     console.log('Connection has been established successfully.');
