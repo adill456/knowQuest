@@ -1,6 +1,7 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
@@ -19,6 +20,8 @@ import { cn } from "@/lib/utils";
 import { loginSchema } from "@/schemas/authSchema";
 
 const LoginForm = () => {
+  const router = useRouter();
+
   const form = useForm<z.infer<typeof loginSchema>>({
     resolver: zodResolver(loginSchema),
     defaultValues: {
@@ -85,7 +88,11 @@ const LoginForm = () => {
         </Form>
         <p className="text-gray-700 text-base text-center">
           {"Don't have an account?"}
-          <Button variant="link" className="text-blue-500 px-2 text-base">
+          <Button
+            onClick={() => router.push("/signup")}
+            variant="link"
+            className="text-blue-500 px-2 text-base"
+          >
             Sign up
           </Button>
         </p>
