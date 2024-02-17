@@ -3,9 +3,9 @@ import SignupForm from "@/components/auth/SignupForm";
 const Signup = () => {
   return (
     <section className="w-full  -mt-[6rem]  h-screen flex items-center justify-center">
-      <section className="w-full absolute lg:w-4/5 lg:flex items-center justify-center py-3">
-        <div className="grid grid-cols-1 lg:grid-cols-2 place-items-center h-[600px] lg:h-[740px] w-4/5 m-auto border border-gray-200 rounded-lg overflow-hidden">
-          <div className="col-span-1 h-full w-full bg-gray-200 p-10">
+      <section className="w-full absolute lg:w-full lg:flex items-center justify-center py-1">
+        <div className="grid grid-cols-1 lg:grid-cols-3 place-items-center h-[600px] lg:h-[700px] w-4/5 m-auto border border-gray-200 rounded-lg overflow-hidden">
+          <div className="col-span-2 h-full w-full bg-gray-200 p-5">
             <SignupForm />
           </div>
           <div className="col-span-1 hidden lg:block text-white bg-black h-full w-full p-10">

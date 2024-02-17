@@ -18,24 +18,19 @@ import { Input } from "@/components/ui/input";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { cn } from "@/lib/utils";
 import { registerSchema } from "@/schemas/authSchema";
+import { register } from "@/services/auth";
 
 const SignupForm = () => {
   const router = useRouter();
 
   const form = useForm<z.infer<typeof registerSchema>>({
     resolver: zodResolver(registerSchema),
-    defaultValues: {
-      first_name: "",
-      last_name: "",
-      email: "",
-      phone: 0,
-      password: "",
-      role: "",
-    },
   });
 
-  const onSubmit = (data: z.infer<typeof registerSchema>) => {
-    console.log(data);
+  const onSubmit = async (data: z.infer<typeof registerSchema>) => {
+    const { confirm_password, ...rest } = data;
+    const response = await register(rest);
+    console.log(response);
   };
   return (
     <div className="flex flex-col gap-2 h-full">
@@ -44,7 +39,10 @@ const SignupForm = () => {
           <h6 className="text-3xl font-bold">Signup</h6>
         </div>
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-3">
+          <form
+            onSubmit={form.handleSubmit(onSubmit)}
+            className="grid grid-cols-1 gap-6 md:grid-cols-2"
+          >
             <FormField
               control={form.control}
               name="first_name"
@@ -98,6 +96,23 @@ const SignupForm = () => {
             />
             <FormField
               control={form.control}
+              name="phone"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Phone</FormLabel>
+                  <FormControl>
+                    <Input
+                      className="rounded-lg text-base"
+                      placeholder="Enter phone"
+                      {...field}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
               name="password"
               render={({ field }) => (
                 <FormItem>
@@ -107,6 +122,25 @@ const SignupForm = () => {
                       className="rounded-lg text-base"
                       placeholder="Enter Passowrd"
                       {...field}
+                      type="password"
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="confirm_password"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Confirm Password</FormLabel>
+                  <FormControl>
+                    <Input
+                      className="rounded-lg text-base"
+                      placeholder="Confirm Passowrd"
+                      {...field}
+                      type="password"
                     />
                   </FormControl>
                   <FormMessage />
@@ -117,7 +151,7 @@ const SignupForm = () => {
               control={form.control}
               name="role"
               render={({ field }) => (
-                <FormItem className="flex space-x-2">
+                <FormItem className="flex space-x-2 col-span-2">
                   <FormControl>
                     <RadioGroup
                       onValueChange={field.onChange}
@@ -150,7 +184,7 @@ const SignupForm = () => {
               type="submit"
               variant="default"
               size="lg"
-              className={cn(`w-full px-3 py-4 text-xl`)}
+              className={cn(`w-full px-3 py-4 text-xl col-span-2`)}
             >
               Signup
             </Button>

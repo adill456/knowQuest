@@ -11,7 +11,6 @@ const emailTemplateSource = fs.readFileSync(filePath, 'utf8');
 
 const compliedTemplate = handlebar.compile(emailTemplateSource);
 
-
 const sendMail = async (email, verificationLink) => {
     const transporter = nodemailer.createTransport({
         host: "sandbox.smtp.mailtrap.io",
