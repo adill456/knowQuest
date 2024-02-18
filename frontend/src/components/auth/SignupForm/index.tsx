@@ -18,20 +18,24 @@ import { Input } from "@/components/ui/input";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { cn } from "@/lib/utils";
 import { registerSchema } from "@/schemas/authSchema";
-import { register } from "@/services/auth";
 
 const SignupForm = () => {
   const router = useRouter();
 
   const form = useForm<z.infer<typeof registerSchema>>({
+    defaultValues: {
+      first_name: "",
+      last_name: "",
+      email: "",
+      phone: "",
+      password: "",
+      confirm_password: "",
+      role: "student",
+    },
     resolver: zodResolver(registerSchema),
   });
 
-  const onSubmit = async (data: z.infer<typeof registerSchema>) => {
-    const { confirm_password, ...rest } = data;
-    const response = await register(rest);
-    console.log(response);
-  };
+  const onSubmit = async (data: z.infer<typeof registerSchema>) => {};
   return (
     <div className="flex flex-col gap-2 h-full">
       <div className="w-full flex flex-col gap-2 px-5">

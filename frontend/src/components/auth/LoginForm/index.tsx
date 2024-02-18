@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
+import { useAuth } from "@/app/context/AuthProvider";
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -20,15 +21,21 @@ import { cn } from "@/lib/utils";
 import { loginSchema } from "@/schemas/authSchema";
 
 const LoginForm = () => {
+  const { login, message } = useAuth();
   const router = useRouter();
 
   const form = useForm<z.infer<typeof loginSchema>>({
+    defaultValues: {
+      email: "",
+      password: "",
+    },
     resolver: zodResolver(loginSchema),
   });
 
-  const onSubmit = (data: z.infer<typeof loginSchema>) => {
-    console.log(data);
+  const onSubmit = async (data: z.infer<typeof loginSchema>) => {
+    await login(data);
   };
+
   return (
     <div className="flex flex-col gap-2 items-start h-full justify-center">
       <div className="w-full flex flex-col gap-2 px-5">
@@ -65,6 +72,7 @@ const LoginForm = () => {
                     <Input
                       className="rounded-lg text-base"
                       placeholder="Enter password"
+                      type="password"
                       {...field}
                     />
                   </FormControl>

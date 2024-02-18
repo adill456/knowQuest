@@ -6,7 +6,7 @@ class userController {
         try {
 
             const { id } = req.params;
-            const user = await User.findOne({ where: { id } });
+            const user = await User.findOne({ where: { id }, exclude: ['password'] });
             if (!user) {
                 return res.status(400).json({ success: false, message: "User not found" })
             }
