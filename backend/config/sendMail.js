@@ -26,7 +26,7 @@ const sendMail = async (email, verificationLink) => {
         subject: 'Email Verification',
         html: compliedTemplate({ verificationLink }),
     }
-    await transporter.sendMail(message, (error, info) => {
+    transporter.sendMail(message, (error, info) => {
         if (error) {
             console.error('Error sending email:', error);
             return process.exit(1);
