@@ -1,4 +1,4 @@
-import { Model } from "sequelize";
+import { DataTypes, Model } from "sequelize";
 
 import { sequelize } from "../config/database.js";
 
@@ -7,22 +7,22 @@ class Topic extends Model { }
 Topic.init(
     {
         topic_id: {
-            type: DataType.INTEGER,
+            type: DataTypes.INTEGER,
             primaryKey: true,
             autoIncrement: true,
             allowNull: false,
         },
         topic_name: {
-            type: DataType.STRING,
+            type: DataTypes.STRING,
             allowNull: false,
             validate: {
                 len: [3, Infinity],
             },
         },
         created_at: {
-            type: DataType.DATE,
+            type: DataTypes.DATE,
             allowNull: false,
-            defaultValue: DataType.NOW,
+            defaultValue: DataTypes.NOW,
         },
     },
     {

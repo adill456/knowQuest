@@ -1,32 +1,31 @@
-import { Model } from "sequelize";
+import { DataTypes, Model } from "sequelize";
 
-import { sequelize } from "../config/database";
+import { sequelize } from "../config/database.js";
 
 class SubTopic extends Model { }
 
 SubTopic.init({
-    sub_topic_id: {
-        type: DataType.INTEGER,
+    subtopic_id: {
+        type: DataTypes.INTEGER,
         primaryKey: true,
         autoIncrement: true,
         allowNull: false,
     },
-    sub_topic_name: {
-        type: DataType.STRING,
+    subtopic_name: {
+        type: DataTypes.STRING,
         allowNull: false,
         validate: {
             len: [3, Infinity],
         },
     },
     created_at: {
-        type: DataType.DATE,
+        type: DataTypes.DATE,
         allowNull: false,
-        defaultValue: DataType.NOW,
+        defaultValue: DataTypes.NOW,
     },
 }, {
     sequelize,
     modelName: "sub_topic",
-    underscored: true,
     timestamps: false,
 })
 
