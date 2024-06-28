@@ -1,0 +1,8 @@
+version: '3'
+
+services:
+  knowquest:
+    container_name: knowquest
+    command: yarn start
+    environment:
+      - NODE_ENV=production
