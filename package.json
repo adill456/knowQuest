@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "A Quiz application",
   "main": "server.js",
+  "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "cross-env NODE_ENV=development nodemon src/server.js"

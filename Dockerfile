@@ -1,4 +1,4 @@
-FROM node:alpine
+FROM node:20-alpine
 
 RUN mkdir -p /usr/src/knowquest && chown -R node:node /usr/src/knowquest
 
@@ -14,4 +14,4 @@ COPY --chown=node:node . .
 
 EXPOSE 5000
 
-CMD ["yarn", "nodemon", "start"]
+CMD ["yarn", "nodemon", "src/server.js"]
