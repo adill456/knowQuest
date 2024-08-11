@@ -1,4 +1,4 @@
-import {version} from '../../package.json';
+const { version } = require('../../package.json');
 const config = require('../config/config');
 
 const swaggerDef = {

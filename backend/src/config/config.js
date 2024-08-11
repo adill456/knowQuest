@@ -1,8 +1,8 @@
-import path from 'path';
-import dotenv from 'dotenv';
-import Joi from 'joi';
+const dotenv = require('dotenv');
+const path = require('path');
+const Joi = require('joi');
 
-dotenv.config({ path: path.join(__dirname, '../../.env') });
+dotenv.config({ path: path.join(__dirname, '../../../.env') });
 
 const envVarsSchema = Joi.object()
   .keys({
@@ -37,11 +37,6 @@ module.exports = {
   port: envVars.PORT,
   mongoose: {
     url: envVars.MONGODB_URL + (envVars.NODE_ENV === 'test' ? '-test' : ''),
-    options: {
-      useCreateIndex: true,
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-    },
   },
   jwt: {
     secret: envVars.JWT_SECRET,

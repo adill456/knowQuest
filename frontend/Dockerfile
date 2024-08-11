@@ -1,26 +1,29 @@
-# Use node image
-FROM node:20-alpine
+# Stage 1: Compile and Build angular codebase
 
-# Set working directory
-WORKDIR /usr/src/frontend
+# Use official node image as the base image
+FROM node:latest as build
 
-# Copy package files and install dependencies
-COPY package.json package-lock.json ./
-RUN yarn install --frozen-lockfile
+# Set the working directory
+WORKDIR /usr/local/app
 
-# Copy application files
-COPY . .
+COPY ./package*.json ./
 
-# Build the Angular app
-RUN yarn build --configuration production
+# Install all the dependencies
+RUN npm ci
 
-# Install nginx
-RUN apk add --no-cache nginx
+# Generate the build of the application
+RUN npm run build --prod
 
-# Copy the built files to nginx's html directory
-RUN rm -rf /var/lib/nginx/html/* && \
-    cp -r /usr/src/frontend/dist/* /var/lib/nginx/html/
 
-FROM nginx:stable-alpine
-COPY --from=build-stage /app/dist/out/ /usr/share/nginx/html
-COPY ./nginx.conf /etc/nginx/conf.d/default.conf
+# Stage 2: Serve app with nginx server
+
+# Use official nginx image as the base image
+FROM nginx:latest
+
+# Copy the build output to replace the default nginx contents.
+COPY --from=build /usr/local/app/dist/frontend /usr/share/nginx/html
+
+# Expose port 80
+EXPOSE 80
+
+CMD ["nginx", "-g", "daemon off;"]

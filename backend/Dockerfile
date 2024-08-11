@@ -1,23 +1,12 @@
-# Use node image
-FROM node:20-alpine
+FROM node:latest as build
 
-# Install bash
-USER root
-RUN apk add --no-cache bash
+WORKDIR /usr/local/knowquest
 
-# Set working directory
-WORKDIR /usr/src/knowquest
+COPY ./ /usr/local/knowquest/
 
-# Copy backend package files and install dependencies
-COPY backend/package.json backend/package-lock.json ./
-USER node
-RUN yarn install --frozen-lockfile
+RUN npm install -g pnpm \
+    && pnpm install
 
-# Copy backend application code
-COPY --chown=node:node backend/ .
-
-# Expose the application port
 EXPOSE 5000
 
-# Start the application
-CMD ["yarn", "start"]
+CMD ["pnpm", "run", "dev"]

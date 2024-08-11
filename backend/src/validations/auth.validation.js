@@ -1,12 +1,43 @@
-import Joi from 'joi';
-
-import { password } from './custom.validation';
+const Joi = require('joi');
+const { password } = require('./custom.validation');
 
 const register = {
   body: Joi.object().keys({
+    name: Joi.string().required(),
     email: Joi.string().required().email(),
     password: Joi.string().required().custom(password),
-    name: Joi.string().required(),
+    role: Joi.string().required().valid('student', 'teacher'),
+    studentId: Joi.when('role', {
+      is: 'student',
+      then: Joi.string().required(),
+      otherwise: Joi.forbidden(),
+    }),
+    degree: Joi.when('role', {
+      is: 'student',
+      then: Joi.string().required().valid('BS Math', 'BS Computer Science', 'BS Physics'),
+      otherwise: Joi.forbidden(),
+    }),
+    semester: Joi.when('role', {
+      is: 'student',
+      then: Joi.number().required().integer().min(1).max(8),
+      otherwise: Joi.forbidden(),
+    }),
+
+    teacherId: Joi.when('role', {
+      is: 'teacher',
+      then: Joi.string().required(),
+      otherwise: Joi.forbidden(),
+    }),
+    department: Joi.when('role', {
+      is: 'teacher',
+      then: Joi.string().required().valid('Math', 'Computer Science', 'Physics'),
+      otherwise: Joi.forbidden(),
+    }),
+    subjects: Joi.when('role', {
+      is: 'teacher',
+      then: Joi.array().items(Joi.string()).required(),
+      otherwise: Joi.forbidden(),
+    }),
   }),
 };
 

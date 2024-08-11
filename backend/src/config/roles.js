@@ -1,12 +1,12 @@
 const allRoles = {
-  user: [],
-  admin: ['getUsers', 'manageUsers'],
+  student: [],
+  teacher: ["makeQuiz", "editQuiz", "deleteQuiz", "viewQuiz", "viewResult","updateQuestion","deleteQuestion","createQuestion"],
 };
 
 const roles = Object.keys(allRoles);
 const roleRights = new Map(Object.entries(allRoles));
 
-export {
-    roles,
-    roleRights,
-}
+module.exports = {
+  roles,
+  roleRights,
+};

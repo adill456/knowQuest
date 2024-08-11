@@ -12,12 +12,37 @@ components:
           type: string
         role:
           type: string
-          enum: [user, admin]
+          enum: [student, teacher]
+        studentId:
+          type: string
+          description: "Required if the role is student"
+        degree:
+          type: string
+          enum: [BS in Math, BS in Computer Science, BS in Physics]
+          description: "Required if the role is student"
+        semester:
+          type: integer
+          description: "Required if the role is student"
+        teacherId:
+          type: string
+          description: "Required if the role is teacher"
+        department:
+          type: string
+          enum: [Math, Computer Science, Physics]
+          description: "Required if the role is teacher"
+        subjects:
+          type: array
+          items:
+            type: string
+          description: "Required if the role is teacher"
       example:
         id: 5ebac534954b54139806c112
         email: fake@example.com
         name: fake name
-        role: user
+        role: student
+        studentId: S12345
+        degree: BS in Computer Science
+        semester: 3
 
     Token:
       type: object
@@ -35,9 +60,9 @@ components:
       type: object
       properties:
         access:
-          $ref: "#/components/schemas/Token"
+          $ref: '#/components/schemas/Token'
         refresh:
-          $ref: "#/components/schemas/Token"
+          $ref: '#/components/schemas/Token'
 
     Error:
       type: object
@@ -53,7 +78,7 @@ components:
       content:
         application/json:
           schema:
-            $ref: "#/components/schemas/Error"
+            $ref: '#/components/schemas/Error'
           example:
             code: 400
             message: Email already taken
@@ -62,7 +87,7 @@ components:
       content:
         application/json:
           schema:
-            $ref: "#/components/schemas/Error"
+            $ref: '#/components/schemas/Error'
           example:
             code: 401
             message: Please authenticate
@@ -71,7 +96,7 @@ components:
       content:
         application/json:
           schema:
-            $ref: "#/components/schemas/Error"
+            $ref: '#/components/schemas/Error'
           example:
             code: 403
             message: Forbidden
@@ -80,7 +105,7 @@ components:
       content:
         application/json:
           schema:
-            $ref: "#/components/schemas/Error"
+            $ref: '#/components/schemas/Error'
           example:
             code: 404
             message: Not found
